@@ -1,6 +1,6 @@
 # ubuntu version or codename  build argument
 ARG ubuntu_codename
-FROM ubuntu:$ubuntu_codename
+FROM ubuntu:${ubuntu_codename}
 
 # redis stable version to be downloaded
 ARG redis_ver=5.0.5
@@ -10,7 +10,7 @@ ARG redis_ver=5.0.5
 ENV REDIS_VERSION=${redis_ver} \
     REDIS_USER=redis \
     REDIS_HOME=/opt/redis \
-    REDIS_PORT=6379
+    REDIS_PORT=6379 \
     # we dont want manual prompt for  timezone configuration while installing tcl
     DEBIAN_FRONTEND=noninteractive 
 
