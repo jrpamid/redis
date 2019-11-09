@@ -1,0 +1,8 @@
+.pass*
+password*
+secret*
+pass*
+*pass*
+*password*
+.log
+*.log.*
