@@ -37,7 +37,7 @@ RUN set -x \
 RUN set -x \
     && cd /tmp \
     && wget http://download.redis.io/releases/redis-${redis_ver}.tar.gz \
-    && tar xvzf reis-${redis_ver}.tar.gz \
+    && tar xvzf redis-${redis_ver}.tar.gz \
     && cd /tmp/redis-${redis_ver} \
     && make deps \
     && make  \
