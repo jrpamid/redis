@@ -29,10 +29,11 @@ examples:-
 |     path/directory           |    Description                     |
 | ---------------------------- | ---------------------------------- |
 | /opt/redis                   |  REDIS_HOME                        |
+| /opt/redis/bin               |  Redis executable binaries         |
 | /opt/redis/conf              |  Redis config files (redis.conf)   |
 | /opt/redis/logs              |  Redis logs (image build logs)     |
 | /opt/redis/data              |  Redis data store area             |
-| /opt/redis/utils             |  Redis test-* utilities copied from source code |
+
 ## Building the Redis Image
 #### 1. redis on ubuntu
 ````

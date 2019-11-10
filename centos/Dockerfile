@@ -1,6 +1,6 @@
 # centos base version as build argument
 ARG centos_ver=7
-FROM centos:${centos_ver} as base
+FROM centos:$centos_ver as base
 
 # redis stable version to be downloaded
 ARG redis_ver=5.0.5
@@ -35,8 +35,16 @@ RUN set -x \
     && make test | tee /opt/redis/logs/make_tests.log \
     && make PREFIX=${REDIS_HOME} install \
     && cp redis.conf /opt/redis/conf/redis.conf \
-    && cp sentinel.conf /opt/redis/conf/sentinel.conf \
-    && cp runtest* /opt/redis/utils/ 
+    && cp sentinel.conf /opt/redis/conf/sentinel.conf 
+
+RUN set -x \
+    && useradd  --comment "Redis user" \
+                 --home-dir /home/redis \
+                 --system \
+                 --user-group ${REDIS_USER} \
+    && chmod -R 755 ${REDIS_HOME}/* \
+    && chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_HOME}/* 
+
 
 # Final minimal image 
 FROM centos:${centos_ver}
@@ -47,26 +55,10 @@ LABEL   name="Redis" \
         author="jaggs" \
         email="jrpamid.cloudops@gmail.com"
 
-# metadata and environments variables defined  last for better caching
-# # environment variables
-ENV REDIS_VERSION=${redis_ver} \
-    REDIS_USER=redis \
-    REDIS_HOME=/opt/redis \
-    REDIS_PORT=6379 
-
 # copy the compiled binaries from the previous stage
+# copy the /etc/{passwd|group} from  base 
+COPY --from=base  /etc/passwd /etc/group /etc/ 
 COPY --from=base /opt/ /opt/
-
-RUN set -x \
-    && yum updateinfo \
-    && yum install -y tcl \
-    && useradd  --comment "Redis user" \
-                 --home-dir /home/redis \
-                 --system \ 
-                 --user-group ${REDIS_USER} \ 
-    && chmod -R 755 /opt/redis/* \
-    && chown -R ${REDIS_USER}:${REDIS_USER} /opt/redis/* \
-    && yum clean all  
 
 EXPOSE ${REDIS_PORT}
 
