@@ -31,7 +31,12 @@ pipeline {
                 echo "****************** Alpine - Redis  Image ************************"
                 echo "ALPINE_VERSION = alpine:${ALPINE_VER}, REDIS = redis-${REDIS_VER}"
                 sh ''
-
+            }
+            post {
+                success {
+                 echo "Pushing redis-alpine image to " 
+                   archiveArtifacts artifacts: 'java-app/target/*.jar', fingerprint: true
+                }
             }
         }
 
@@ -55,11 +60,11 @@ pipeline {
         }
         success {
             echo "This  block will be executed on success  of pipeline"
-             mail to: team@example.com, subject: 'Build Success :)'
+             //mail to: team@example.com, subject: 'Build Success :)'
         }
         failure{
             echo "This block will be executed in case  of pipeline failure"
-            mail to: team@example.com, subject: 'The Pipeline failed :('
+            //mail to: team@example.com, subject: 'The Pipeline failed :('
         }
         unstable {
             echo "This block  will be executed in case of job stability"
