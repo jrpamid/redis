@@ -3,6 +3,12 @@ ARG ALPINE_VER=latest
 FROM alpine:${ALPINE_VER} as base
 
 ARG ALPINE_VER
+
+ENV REDIS_VERSION=${REDIS_VER} \
+    REDIS_USER=redis \
+    REDIS_HOME=/opt/redis \
+    REDIS_PORT=6379 
+    
 # install the source building dependencies
 RUN set -x \
     &&  apk add --no-cache --virtual .build-deps \
@@ -51,8 +57,8 @@ LABEL   name="Redis" \
         description="Redis - OpenSource noSQL key-value database" \
         author="jaggs" \
         email="jrpamid.cloudops@gmail.com" \
-        redis_home=${REDIS_HOME} \
-        REDIS_VERsion=${REDIS_VER} \
+        REDIS_HOME=${REDIS_HOME} \
+        REDIS_VERSION=${REDIS_VER} \
         redis_port=${REDIS_PORT}
 
 # copy binaries from base build
