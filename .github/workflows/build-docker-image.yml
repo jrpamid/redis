@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Alpine based Redis image
+      run: |
+         cd ./alpine 
+         docker build --tag redis_alpine:6.0.9 --build-arg ALPINE_VER=3.12 --build-arg REDIS_VER=6.0.9
+    - name: Build Ubuntu based Redis image
+      run: |
+         cd ./ubuntu
+         docker build --tag redis_ubuntu:6.0.9 --build-arg UBUNTU_CODENAME=eoan --build-arg REDIS_VER=6.0.9
+    - name: Build Centos based Redis image
+      run: |
+         cd ./centos
+         docker build --tag redis_ubuntu:6.0.9 --build-arg CENTOS_VER=8 --build-arg REDIS_VER=6.0.9         
+       
