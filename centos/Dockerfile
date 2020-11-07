@@ -1,13 +1,13 @@
 # centos base version as build argument
-ARG centos_ver=7
-FROM centos:$centos_ver as base
+ARG CENTOS_VER=7
+FROM centos:${CENTOS_VER} as base
 
 # redis stable version to be downloaded
-ARG redis_ver=6.0.9
+ARG REDIS_VER=6.0.9
 
 # metadata and environments variables defined  last for better caching
 # environment variables
-ENV REDIS_VERSION=${redis_ver} \
+ENV REDIS_VERSION=${REDIS_VER} \
     REDIS_USER=redis \
     REDIS_HOME=/opt/redis \
     REDIS_PORT=6379 
@@ -24,12 +24,12 @@ RUN set -x \
 # cleanup after the install
 RUN set -x \
     && cd /tmp \
-    && wget http://download.redis.io/releases/redis-${redis_ver}.tar.gz \
-    && tar xvzf redis-${redis_ver}.tar.gz \
+    && wget http://download.redis.io/releases/redis-${REDIS_VER}.tar.gz \
+    && tar xvzf redis-${REDIS_VER}.tar.gz \
     && mkdir -p /opt/redis/conf /opt/redis/logs/ opt/redis/data /opt/redis/utils 
 
 RUN set -x \
-    && cd /tmp/redis-${redis_ver} \
+    && cd /tmp/redis-${REDIS_VER} \
     && make deps | tee /opt/redis/logs/make_deps.log \
     && make      | tee /opt/redis/logs/make_redis.log \
     && make test | tee /opt/redis/logs/make_tests.log \
@@ -47,7 +47,7 @@ RUN set -x \
 
 
 # Final minimal image 
-FROM centos:${centos_ver}
+FROM centos:${CENTOS_VER}
 
 # Image meta data
 LABEL   name="Redis" \

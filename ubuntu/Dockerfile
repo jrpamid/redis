@@ -1,15 +1,15 @@
 # ubuntu version or codename  build argument
-ARG ubuntu_codename=latest
+ARG UBUNTU_CODENAME=latest
 # redis stable version to be downloaded
-ARG redis_ver=6.0.9
+ARG REDIS_VER=6.0.9
 
-FROM ubuntu:${ubuntu_codename} as base
+FROM ubuntu:${UBUNTU_CODENAME} as base
 
-ARG redis_ver
+ARG REDIS_VER
 
 # metadata and environments variables defined  last for better caching
 # environment variables
-ENV REDIS_VERSION=${redis_ver} \
+ENV REDIS_VERSION=${REDIS_VER} \
     REDIS_USER=redis \
     REDIS_HOME=/opt/redis \
     REDIS_PORT=6379 \
@@ -33,12 +33,12 @@ RUN set -x \
 # cleanup after the install
 RUN set -x \
     && cd /tmp \
-    && wget http://download.redis.io/releases/redis-${redis_ver}.tar.gz \
-    && tar xvzf redis-${redis_ver}.tar.gz \
+    && wget http://download.redis.io/releases/redis-${REDIS_VER}.tar.gz \
+    && tar xvzf redis-${REDIS_VER}.tar.gz \
     && mkdir -p /opt/redis/conf /opt/redis/logs/ opt/redis/data /opt/redis/utils
 
 RUN set -x \
-    && cd /tmp/redis-${redis_ver} \
+    && cd /tmp/redis-${REDIS_VER} \
     && make deps | tee /opt/redis/logs/make_deps.log \
     && make  | tee /opt/redis/logs/make.log    \
     && make test | tee /opt/redis/logs/make_test.log \
@@ -58,14 +58,14 @@ RUN set -x \
 
 # Final minimal image
 # Results ~ 100 MB image 
-FROM ubuntu:${ubuntu_codename}
+FROM ubuntu:${UBUNTU_CODENAME}
 
 # Image meta data
 LABEL   name="Redis" \
         description="OpenSource noSQL key-value database" \
         author="jaggs" \
         email="jrpamid.cloudops@gmail.com" \
-        redis_version=${redis_ver} \
+        REDIS_VERsion=${REDIS_VER} \
 	redis_port=${REDIS_PORT} \
         redis_home=${REDIS_HOME} 
 
