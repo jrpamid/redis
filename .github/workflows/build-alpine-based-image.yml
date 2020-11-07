@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Alpine based Redis image
+      run: |
+         cd ./alpine 
+         echo "${{ secrets.DOCKERPW }}" | docker login -u "jrpamid" --password-stdin
+         docker build -t redis_alpine:6.0.9 --build-arg ALPINE_VER=3.12 --build-arg REDIS_VER=6.0.9 .
+         docker push jrpamid/redis_alpine:6.0.9
+

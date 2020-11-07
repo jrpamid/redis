@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Centos based Redis image
+      run: |
+         cd ./centos
+         echo "${{ secrets.DOCKERPW }}" | docker login -u "jrpamid" --password-stdin
+         docker build -t redis_centos:6.0.9 --build-arg CENTOS_VER=8 --build-arg REDIS_VER=6.0.9  .   
+         docker  push jrpamid/redis_centos:6.0.9    
+       

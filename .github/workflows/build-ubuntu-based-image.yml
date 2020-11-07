@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Ubuntu based Redis image
+      run: |
+         cd ./ubuntu
+         echo "${{ secrets.DOCKERPW }}" | docker login -u "jrpamid" --password-stdin
+         docker build -t redis_ubuntu:6.0.9 --build-arg UBUNTU_CODENAME=eoan --build-arg REDIS_VER=6.0.9 . 
+         docker push jrpamid/redis_ubuntu:6.0.9
+
+       
