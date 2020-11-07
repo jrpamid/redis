@@ -19,11 +19,13 @@ examples:-
 
 | ubuntu version | ubuntu_codename  |
 | -------------- | ---------------- |
+|   20.04        | focal            |
+|   20.10        | groovy           |
+|   21.04        | hirsute          |
 |   19.10        | eoan             |
 |   19.04        | disco            |
 |   18.04        | bionic           |
 |   16.04        | xenial           |
-|   14.04        | trusty           |
 
 #### Redis files and directories
 |     path/directory           |    Description                     |
