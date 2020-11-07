@@ -3,7 +3,7 @@ ARG centos_ver=7
 FROM centos:$centos_ver as base
 
 # redis stable version to be downloaded
-ARG redis_ver=5.0.5
+ARG redis_ver=6.0.9
 
 # metadata and environments variables defined  last for better caching
 # environment variables
@@ -52,7 +52,7 @@ FROM centos:${centos_ver}
 # Image meta data
 LABEL   name="Redis" \
         description="OpenSource noSQL key-value database" \
-        author="jaggs" \
+        author="Jagadish Pamidimalla" \
         email="jrpamid.cloudops@gmail.com"
 
 # copy the compiled binaries from the previous stage

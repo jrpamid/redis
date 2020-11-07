@@ -1,9 +1,11 @@
 # ubuntu version or codename  build argument
 ARG ubuntu_codename=latest
+# redis stable version to be downloaded
+ARG redis_ver=6.0.9
+
 FROM ubuntu:${ubuntu_codename} as base
 
-# redis stable version to be downloaded
-ARG redis_ver=5.0.5
+ARG redis_ver
 
 # metadata and environments variables defined  last for better caching
 # environment variables
