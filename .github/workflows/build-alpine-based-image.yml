@@ -18,6 +18,6 @@ jobs:
       run: |
          cd ./alpine 
          echo "${{ secrets.DOCKERPW }}" | docker login -u "jrpamid" --password-stdin
-         docker build -t jrpamid/redis_alpine:6.0.9 --build-arg ALPINE_VER=3.12 --build-arg REDIS_VER=6.0.9 .
-         docker push jrpamid/redis_alpine:6.0.9
+         docker build -t jrpamid/redis-alpine:6.0.9 --build-arg ALPINE_VER=3.12 --build-arg REDIS_VER=6.0.9 .
+         docker push jrpamid/redis-alpine:6.0.9
 
