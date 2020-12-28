@@ -19,5 +19,5 @@ jobs:
          cd ./centos
          echo "${{ secrets.DOCKERPW }}" | docker login -u "jrpamid" --password-stdin
          docker build -t jrpamid/redis-centos:6.0.9 --build-arg CENTOS_VER=8 --build-arg REDIS_VER=6.0.9  .   
-         docker  push jrpamid/redisi-centos:6.0.9    
+         docker  push jrpamid/redis-centos:6.0.9    
        
